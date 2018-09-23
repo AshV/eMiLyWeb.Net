@@ -1,31 +1,141 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "eMiLy";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div id="body" class="continer-fluid mb-5">
+    <div class="row">
+        <div id="b1" class="col-lg-4 col-sm-12 card style1 z-depth-3 rounded p-2">
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item mt-2 style3 black-text z-depth-2 white-text">Steps</li>
+                    <li class="list-group-item mt-4 white z-depth-2">
+                        <ol>
+                            <li class="black-text">
+                                <b>Upload your File</b><br />
+                                Please make sure your data,in the .csv format, is clean to ensure the best results.
+                                Let’s check how clean is your data here.(add a hyperlink)
+                            </li>
+                            <li class="black-text">
+                                <b>Select the Attribute</b><br />
+                                Select the column name from your dataset for which you wish to get the predictions or the classification.
+                            </li>
+                            <li class="black-text">
+                                <b>Hit the ‘Submit’ button</b><br />
+                            </li>
+                            <li class="black-text">
+                                <b>Sit Back and Relax</b><br />
+                                Please wait while we process your request and get back to you with the the results.
+                            </li>
+                            <br />
+                            <b>Voila!</b> You now have the predicted values of the accuracy rates you might hit with all the other algorithms that can be applied to your data. And thus you have the Best out of the lot.
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="b2" class="col-lg-4 col-sm-12 card style2 z-depth-3 rounded py-5">
+            <div class="row">
+                <div class="col-lg-3 col-sm-4"></div>
+                <div class="col-lg-6 col-sm-4" id="uploadblock">
+                    <div class="grey p-5 z-depth-1">
+                        <center>
+                            <h1 class="black-text" id="uploadbtn">Upload</h1>
+                            <i class="fa fa-upload big" aria-hidden="true"></i>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <center>
+                        @*<button id="btnGroupVerticalDrop3" type="button" class="btn btn-teal dropdown-toggle lighten-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="white-text">Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop3">
+                                <a class="dropdown-item">Dropdown link</a>
+                                <a class="dropdown-item">Dropdown link</a>
+                            </div><br />
+                            <a href="" class="btn btn-primary z-depth-2 m-0" id="submit">Submit</a>*@
+                        <input type="file" id="files" name="files" onchange="extractHeader();" />
+                        <br />
+                        <textarea id="base64" rows="5" style="display:nonee"></textarea>
+                        <br />
+                        <select id="selectHeader">
+                            <option>Select Column</option>
+                        </select>
+                        <br />
+                        <button onclick="result();">Submit</button>
+                    </center>
+                </div>
+                <div class="col-2"></div>
+            </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+            //// Pick File
+            <script src="scripts\base64.js"></script>
+            <script>
+                function result() {
+                    debugger;
+                    var file = document.getElementById("files").files[0];
+
+                    var e = document.getElementById("selectHeader");
+                    var columnName = e.options[e.selectedIndex].text;
+
+                    document.getElementById('id01').style.display = 'block';
+
+                    var base64File = document.querySelector("#base64").value;
+
+                    makeFileEntry(base64File, file.name, columnName);
+
+                    //setTimeout(function () {
+                    //    window.location.href = "results.html?" + fileId;
+                    //}, 5000);
+
+
+                }
+
+                function extractHeader() {
+                    debugger;
+                    var dataFile = document.getElementById("files");
+                    var op = Papa.parse(dataFile.files[0], {
+                        complete: function (results) {
+                            debugger;
+                            console.log("Finished:", results.data);
+                            if (results.errors.length == 0) {
+                                var select = document.getElementById("selectHeader");
+                                results.data[0].forEach((header, index) => {
+                                    var el = document.createElement("option");
+                                    el.textContent = header;
+                                    el.value = index;
+                                    select.appendChild(el);
+                                });
+                            } else {
+                                alert("CSV file is not proper.");
+                            }
+                        }
+                    });
+                }
+            </script>
+
+
+        </div>
+        <div id="b3" class="col-lg-3 col-sm-12 style1 card z-depth-3 rounded p-2">
+            <ul class="list-group">
+                <li class="list-group-item my-2 style3 z-depth-2 white-text">Features</li>
+                <li class="black-text list-group-item mt-3 rounded z-depth-2 features">Tired of those multiple trial and error cycles to find out what's best for your data? Confused which Machine Learning model to use? Don't worry, eMiLy is here to help you!</li>
+                <li class="black-text list-group-item mt-3 rounded z-depth-2 features">Get instant results with very easy steps.</li>
+                <li class="black-text list-group-item mt-3 rounded z-depth-2 features">Now you can focus on training you model rather than finding a good model for your data.</li>
+                <li class="black-text list-group-item mt-3 rounded z-depth-2 features">Having trouble tuning your model? Want to know the best parameters? eMiLy is here to help you!</li>
+                <li class="black-text list-group-item mt-3 rounded z-depth-2 features">Get instant access to your previous run reports on a single page.</li>
+                <li class="black-text list-group-item mt-3 rounded z-depth-2 features">Visualize results on a graphical dashboard which will help you compare the performances of different models easily in one go.</li>
+            </ul>
+        </div>
     </div>
 </div>
+<script src="~/js/base64.js"></script>
+<script src="~/js/main.js"></script>
+<script src="~/js/mdb.min.js"></script>
+<script src="~/js/papaparse.min.js"></script>
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/storeData.js"></script>

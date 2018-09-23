@@ -1,4 +1,6 @@
-﻿using System;
+﻿using eMiLyWebNet.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +24,15 @@ namespace eMiLyWebNet.Controllers
 
         public ActionResult Contact()
         {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(RegisterViewModel model)
+        {
+            var id = User.Identity.GetUserId();
             ViewBag.Message = "Your contact page.";
 
             return View();
