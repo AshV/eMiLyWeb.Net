@@ -11,77 +11,81 @@
 </div>
 
 <script>
-        var id = location.search.substr(1);
-        var data = "";
-        var dp = [];
-        var tab = "<tr><th>Algorithm</th><th>Model Efficiency</th></tr>";
-        var fileName;
+    debugger;
+    var id = location.search.substr(1);
+    var data = "";
+    var dp = [];
+    var tab = "<tr><th>Algorithm</th><th>Model Efficiency</th></tr>";
+    var fileName;
 
-        var starCountRef = firebase.database().ref('files/' + id + '/status');
-        starCountRef.on('value', function (snapshot) {
-            if (snapshot.val() == "processed") {
-                firebase.database().ref('files/' + id).once('value').then(function (snapshot) {
-                    var fileData = snapshot.val();
-                    debugger;
-                    data = JSON.parse(setAlgoName(fileData.result));
-                    fileName = fileData.fileName;
+    var starCountRef = firebase.database().ref('users/dummy/' + id + '/status');
+    starCountRef.on('value', function (snapshot) {
+        debugger;
+        alert('1');
+        if (snapshot.val() == "processed") {
+            alert('2');
+            firebase.database().ref('files/' + id).once('value').then(function (snapshot) {
+                var fileData = snapshot.val();
+                debugger;
+                data = JSON.parse(setAlgoName(fileData.result));
+                fileName = fileData.fileName;
 
-                    parseData(data);
-                    renderChart();
-                });
-            } else {
-                document.querySelector("#tab").innerHTML = "waiting for results..."
-            }
-        });
-
-        function parseData(data) {
-            for (key in data) {
-                dp.push({ y: Number(data[key]), label: key })
-                tab += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>";
-            }
-
-            document.querySelector("#tab").innerHTML = tab;
-        }
-
-        function setAlgoName(data) {
-            debugger;
-            data = data.replace('Algo0', 'LinearRegression');
-            data = data.replace('Algo1', 'LassoRegression');
-            data = data.replace('Algo2', 'RidgeRegression');
-            data = data.replace('Algo3', 'RandomForestRegression');
-            data = data.replace('Algo4', 'GradientBoostedRegression');
-            data = data.replace('Algo5', 'SupportVectorRegression');
-            data = data.replace('Algo6', 'LogisticRegression');
-            data = data.replace('Algo7', 'RandomForestClassification');
-            data = data.replace('Algo8', 'GradientBoostingClassification');
-            data = data.replace('Algo9', 'SupportVectorClassification');
-            return data;
-        }
-
-        function renderChart() {
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-
-                title: {
-                    text: "Efficiency of models"
-                },
-                axisX: {
-                    interval: 1
-                },
-                axisY2: {
-                    interlacedColor: "rgba(1,77,101,.2)",
-                    gridColor: "rgba(1,77,101,.1)",
-                    title: fileName
-                },
-                data: [{
-                    type: "bar",
-                    name: "Efficiency",
-                    axisYType: "secondary",
-                    color: "#014D65",
-                    dataPoints: dp
-                }]
+                parseData(data);
+                renderChart();
             });
-            chart.render();
+        } else {
+            document.querySelector("#tab").innerHTML = "waiting for results..."
         }
+    });
+
+    function parseData(data) {
+        for (key in data) {
+            dp.push({ y: Number(data[key]), label: key })
+            tab += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>";
+        }
+
+        document.querySelector("#tab").innerHTML = tab;
+    }
+
+    function setAlgoName(data) {
+        debugger;
+        data = data.replace('Algo0', 'LinearRegression');
+        data = data.replace('Algo1', 'LassoRegression');
+        data = data.replace('Algo2', 'RidgeRegression');
+        data = data.replace('Algo3', 'RandomForestRegression');
+        data = data.replace('Algo4', 'GradientBoostedRegression');
+        data = data.replace('Algo5', 'SupportVectorRegression');
+        data = data.replace('Algo6', 'LogisticRegression');
+        data = data.replace('Algo7', 'RandomForestClassification');
+        data = data.replace('Algo8', 'GradientBoostingClassification');
+        data = data.replace('Algo9', 'SupportVectorClassification');
+        return data;
+    }
+
+    function renderChart() {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+
+            title: {
+                text: "Efficiency of models"
+            },
+            axisX: {
+                interval: 1
+            },
+            axisY2: {
+                interlacedColor: "rgba(1,77,101,.2)",
+                gridColor: "rgba(1,77,101,.1)",
+                title: fileName
+            },
+            data: [{
+                type: "bar",
+                name: "Efficiency",
+                axisYType: "secondary",
+                color: "#014D65",
+                dataPoints: dp
+            }]
+        });
+        chart.render();
+    }
 </script>
 
