@@ -11,11 +11,11 @@ function newFileId() {
 
 var fileId = "";
 
-function makeFileEntry(file, fileName, column) {
+function makeFileEntry(file, fileName, column, user) {
     debugger;
     fileId = newFileId();
     makeLocalEntry(fileId);
-    firebase.database().ref('files/' + fileId).set({
+    firebase.database().ref('users/' + user + '/' + fileId).set({
         fileName: fileName,
         column: column,
         status: "processing",
@@ -23,7 +23,7 @@ function makeFileEntry(file, fileName, column) {
         localFilePath: "TBS"
     });
     debugger;
-    triggerTheJob(file, fileName, column, fileId);
+    triggerTheJob(file, fileName, column, fileId, user);
 }
 
 function makeLocalEntry(fileId) {
@@ -39,7 +39,7 @@ function makeLocalEntry(fileId) {
     }
 }
 
-function triggerTheJob(file_stream, file_name, column_name, file_id) {
+function triggerTheJob(file_stream, file_name, column_name, file_id,user) {
     fetch(
         "http://ec2-52-57-139-117.eu-central-1.compute.amazonaws.com:8080/postjob",
         {
@@ -52,5 +52,5 @@ function triggerTheJob(file_stream, file_name, column_name, file_id) {
         })
         .then(response => response.json())
         .then(data => alert(data))
-        .catch(error => console.error("Error:"+error));
+        .catch(error => console.error("Error:" + error));
 }

@@ -60,7 +60,7 @@
                             <a href="" class="btn btn-primary z-depth-2 m-0" id="submit">Submit</a>*@
                         <input type="file" id="files" name="files" onchange="extractHeader();" />
                         <br />
-                        <textarea id="base64" rows="5" style="display:nonee"></textarea>
+                        <textarea id="base64" rows="5" style="display:none"></textarea>
                         <br />
                         <select id="selectHeader">
                             <option>Select Column</option>
@@ -75,6 +75,14 @@
             //// Pick File
             <script src="scripts\base64.js"></script>
             <script>
+                debugger;
+                var userIdField = document.querySelector("#id");
+                var user = "dummy";
+                if (userIdField == null) {
+
+                } else {
+                    user = userIdField.textContent;
+                }
                 function result() {
                     debugger;
                     var file = document.getElementById("files").files[0];
@@ -82,17 +90,16 @@
                     var e = document.getElementById("selectHeader");
                     var columnName = e.options[e.selectedIndex].text;
 
-                    document.getElementById('id01').style.display = 'block';
+                    // document.getElementById('id01').style.display = 'block';
 
                     var base64File = document.querySelector("#base64").value;
 
-                    makeFileEntry(base64File, file.name, columnName);
+                    makeFileEntry(base64File, file.name, columnName, user);
 
-                    //setTimeout(function () {
-                    //    window.location.href = "results.html?" + fileId;
-                    //}, 5000);
-
-
+                    $("#myModal").modal();
+                    setTimeout(function () {
+                        window.location.href = "results.html?" + fileId;
+                    }, 5000);
                 }
 
                 function extractHeader() {
@@ -132,6 +139,88 @@
             </ul>
         </div>
     </div>
+</div>
+
+<!--Processing Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <center>
+                    <svg class="lds-spinner" width="350px" height="350px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;">
+                        <g transform="rotate(0 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(30 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(60 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(90 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(120 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(150 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(180 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(210 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(240 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(270 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(300 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                        <g transform="rotate(330 50 50)">
+                            <rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#8cd0e5">
+                                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+                            </rect>
+                        </g>
+                    </svg>
+                </center>
+            </div>
+            <div class="modal-footer">
+            </div>
+
+        </div>
+    </div>
+
 </div>
 <script src="~/js/base64.js"></script>
 <script src="~/js/main.js"></script>

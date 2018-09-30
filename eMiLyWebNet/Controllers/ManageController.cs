@@ -75,6 +75,11 @@ namespace eMiLyWebNet.Controllers
             return View(model);
         }
 
+        public  ActionResult Results()
+        {
+            return View();
+        }
+
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
