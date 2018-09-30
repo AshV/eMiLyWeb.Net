@@ -62,6 +62,8 @@
                         <br />
                         <textarea id="base64" rows="5" style="display:none"></textarea>
                         <br />
+                        <input type="email" id="email" placeholder="Enter Email Address" style="display:none"/>
+                        <br />
                         <select id="selectHeader">
                             <option>Select Column</option>
                         </select>
@@ -75,11 +77,16 @@
             //// Pick File
             <script src="scripts\base64.js"></script>
             <script>
+                String.prototype.replaceAll = function (find, replace) {
+                    var str = this;
+                    return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+                };  
                 debugger;
                 var userIdField = document.querySelector("#id");
                 var user = "dummy";
+                var email = document.querySelector("#email").textContent;
                 if (userIdField == null) {
-
+                    document.querySelector("#email").style.display = "block";
                 } else {
                     user = userIdField.textContent;
                 }
@@ -98,7 +105,11 @@
 
                     $("#myModal").modal();
                     setTimeout(function () {
-                        window.location.href = "results.html?" + fileId;
+                        if (user == "dummy") {
+                            window.location.href = "Home/Results?" + fileId;
+                        } else {
+                            window.location.href = "Manage/Results?" + fileId;
+                        }
                     }, 5000);
                 }
 

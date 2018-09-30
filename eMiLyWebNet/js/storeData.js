@@ -20,7 +20,9 @@ function makeFileEntry(file, fileName, column, user) {
         column: column,
         status: "processing",
         result: "Waiting",
-        localFilePath: "TBS"
+        localFilePath: "TBS",
+        uploadedOn: new Date().toDateString(),
+        emailId: email.replaceAll(".", "_dot_").replaceAll("@", "_at_")
     });
     debugger;
     triggerTheJob(file, fileName, column, fileId, user);
@@ -39,7 +41,7 @@ function makeLocalEntry(fileId) {
     }
 }
 
-function triggerTheJob(file_stream, file_name, column_name, file_id,user) {
+function triggerTheJob(file_stream, file_name, column_name, file_id, user) {
     fetch(
         "http://ec2-52-57-139-117.eu-central-1.compute.amazonaws.com:8080/postjob",
         {
